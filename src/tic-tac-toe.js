@@ -36,15 +36,15 @@ class TicTacToe {
     }
 
     getWinner() {
-
+        // if this.winCombinations[] === this.field;
     }
 
     noMoreTurns() {
-
+        return this.stepCount === 9;
     }
 
     isDraw() {
-
+        return this.stepCount === 9 && this.getWinner() === null;
     }
 
     getFieldValue(rowIndex, colIndex) {
