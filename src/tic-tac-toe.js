@@ -28,7 +28,7 @@ class TicTacToe {
             this.field[rowIndex][columnIndex] = this.getCurrentPlayerSymbol();
             this.Player = this.Player ? 0 : 1;
             this.stepCount++;
-            this.getWinner();
+            // this.getWinner();
         }
     }
 
