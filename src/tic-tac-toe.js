@@ -28,6 +28,7 @@ class TicTacToe {
             this.field[rowIndex][columnIndex] = this.getCurrentPlayerSymbol();
             this.Player = this.Player ? 0 : 1;
             this.stepCount++;
+            this.getWinner();
         }
     }
 
@@ -36,7 +37,29 @@ class TicTacToe {
     }
 
     getWinner() {
-        // if this.winCombinations[] === this.field;
+        if (this.stepCount > 2) {
+            this.winCombinations.forEach(el => {
+                    let winCount = 0;
+                    // console.log('WinElement - ' + el);
+
+                    el.forEach(winPosition => {
+                        let position = 0;
+                        this.field.forEach((el) => {
+                            el.forEach((el) => {
+                                position++;
+                                // console.log('position - ' + position);
+                                el === this.getCurrentPlayerSymbol() ?
+                                    winPosition === position ? winCount++ : '' : '';
+                                // console.log('winCount - ' + winCount);
+                                // return winCount === 3 ? this.getCurrentPlayerSymbol() : null;
+                                if (winCount === 3) return this.getCurrentPlayerSymbol();
+                            });
+                        });
+                    });
+                }
+            );
+        } else
+            return null;
     }
 
     noMoreTurns() {
@@ -44,7 +67,7 @@ class TicTacToe {
     }
 
     isDraw() {
-        return this.stepCount === 9 && this.getWinner() === null;
+        return this.stepCount < 9 || this.getWinner() === null;
     }
 
     getFieldValue(rowIndex, colIndex) {
