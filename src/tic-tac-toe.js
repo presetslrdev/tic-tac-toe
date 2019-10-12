@@ -16,50 +16,52 @@ class TicTacToe {
             [3, 5, 7]
         ];
         this.stepCount = 0;
-        this.Player = 0;
+        this.Player = 'x';
+        this.winner = null;
     }
 
     getCurrentPlayerSymbol() {
-        return this.Player ? 'o' : 'x';
+        return this.Player;
     }
 
     nextTurn(rowIndex, columnIndex) {
         if (this.field[rowIndex][columnIndex] === null) {
             this.field[rowIndex][columnIndex] = this.getCurrentPlayerSymbol();
-            this.Player = this.Player ? 0 : 1;
+            this.Player = this.getCurrentPlayerSymbol() === 'x' ? 'o' : 'x';
             this.stepCount++;
-            // this.getWinner();
         }
     }
 
     isFinished() {
-        return this.stepCount === 9 || this.getWinner() !== null;
+        return this.isDraw() || this.getWinner() !== null;
     }
 
     getWinner() {
         if (this.stepCount > 2) {
             this.winCombinations.forEach(el => {
-                    let winCount = 0;
-                    // console.log('WinElement - ' + el);
-
+                    let winCountX = 0;
+                    let winCount0 = 0;
                     el.forEach(winPosition => {
                         let position = 0;
                         this.field.forEach((el) => {
                             el.forEach((el) => {
                                 position++;
-                                // console.log('position - ' + position);
-                                el === this.getCurrentPlayerSymbol() ?
-                                    winPosition === position ? winCount++ : '' : '';
-                                // console.log('winCount - ' + winCount);
-                                // return winCount === 3 ? this.getCurrentPlayerSymbol() : null;
-                                if (winCount === 3) return this.getCurrentPlayerSymbol();
+                                if (el !== null) {
+                                    if (el === 'x') winPosition === position ? winCountX++ : winCountX;
+                                    if (el === 'o') winPosition === position ? winCount0++ : winCount0;
+                                    if (winCountX > 2) {
+                                        this.winner = 'x';
+                                    } else if (winCount0 > 2) {
+                                        this.winner = 'o';
+                                    }
+                                }
                             });
                         });
                     });
                 }
             );
-        } else
-            return null;
+        }
+        return this.winner;
     }
 
     noMoreTurns() {
@@ -67,7 +69,7 @@ class TicTacToe {
     }
 
     isDraw() {
-        return this.stepCount < 9 || this.getWinner() === null;
+        return this.noMoreTurns() && (this.getWinner() === null);
     }
 
     getFieldValue(rowIndex, colIndex) {
